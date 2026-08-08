@@ -367,49 +367,113 @@
     }
     .step h3 { margin-bottom: 10px; }
 
-    /* ── Screenshots Gallery ── */
+    /* ── Screenshots Carousel ── */
     .screenshots {
       padding: 100px 0;
       background: var(--white);
-    }
-    .screenshots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-      margin-top: 64px;
-    }
-    .screenshot-item {
-      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
+    }
+    .carousel-wrapper {
       position: relative;
+      max-width: 340px;
+      margin: 64px auto 0;
     }
-    .screenshot-item:hover {
-      transform: translateY(-6px) scale(1.02);
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-slide {
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .carousel-phone {
+      width: 100%;
+      border-radius: 32px;
       box-shadow: var(--shadow-lg);
+      border: 3px solid rgba(107,45,139,0.1);
+      overflow: hidden;
+      margin-bottom: 28px;
     }
-    .screenshot-item img {
+    .carousel-phone img {
       width: 100%;
       display: block;
-      border-radius: var(--radius-lg);
     }
-    .screenshot-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(107,45,139,0.85));
-      color: white;
+    .carousel-caption {
+      text-align: center;
+      padding: 0 16px;
+    }
+    .carousel-caption h3 {
       font-family: 'Alata', sans-serif;
-      font-size: 0.8rem;
-      padding: 20px 12px 12px;
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-      opacity: 0;
-      transition: opacity 0.2s;
+      color: var(--purple);
+      margin-bottom: 8px;
+      font-size: 1.2rem;
     }
-    .screenshot-item:hover .screenshot-label { opacity: 1; }
+    .carousel-caption p {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .carousel-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--purple);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(107,45,139,0.3);
+      transition: all 0.2s;
+    }
+    .carousel-btn:hover {
+      background: var(--purple-dark);
+      transform: scale(1.05);
+    }
+    .carousel-btn:disabled {
+      background: #ddd;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+    }
+    .carousel-dot.active {
+      background: var(--purple);
+      width: 24px;
+      border-radius: 4px;
+    }
+    .carousel-counter {
+      font-family: 'Alata', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 12px;
+      text-align: center;
+    }
 
     /* ── Lightbox ── */
     .lightbox {
@@ -874,47 +938,106 @@
     </div>
   </section>
 
-  <!-- ── Screenshots Gallery ── -->
+  <!-- ── Screenshots Carousel ── -->
   <section class="screenshots" id="screenshots">
     <div class="container">
       <div class="section-header">
         <span class="badge">App Screenshots</span>
         <h2>See ExamSimplify <span class="text-purple">in action</span></h2>
-        <p>A clean, intuitive interface designed for focused exam preparation. Tap any screenshot to enlarge.</p>
+        <p>A clean, intuitive interface designed for focused exam preparation.</p>
       </div>
-      <div class="screenshots-grid">
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/dashboard.png')">
-          <img src="assets/screenshots/dashboard.png" alt="Dashboard" loading="lazy" />
-          <div class="screenshot-label">Dashboard</div>
+
+      <div class="carousel-wrapper">
+        <div class="carousel-track" id="carouselTrack">
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/dashboard.png')">
+              <img src="assets/screenshots/dashboard.png" alt="Dashboard" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>📊 Your Dashboard</h3>
+              <p>See your trending subjects, saved questions, incomplete tests and latest scores — all in one place the moment you open the app.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/exam-question.png')">
+              <img src="assets/screenshots/exam-question.png" alt="Exam Question with Diagram" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>🔬 Questions with Diagrams</h3>
+              <p>Biology, Physics and Geography questions include real exam diagrams. Tap the image to expand it full screen for easy reading.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/show-answer.png')">
+              <img src="assets/screenshots/show-answer.png" alt="Show Answer" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>💡 Answer Explanations</h3>
+              <p>Don't just see the correct answer — understand why it's right. Full explanations help you learn the concept, not just memorise answers.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/filter-screen.png')">
+              <img src="assets/screenshots/filter-screen.png" alt="Filter Screen" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>🎯 Smart Filters</h3>
+              <p>Filter questions by year, topic and subject. Choose exactly how many questions you want to practise in each session.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/mock-exam.png')">
+              <img src="assets/screenshots/mock-exam.png" alt="Mock Exam" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>⏱️ Timed Mock Exams</h3>
+              <p>Simulate real exam conditions with a 120-minute countdown timer. Build speed and confidence before your actual exam day.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/score.png')">
+              <img src="assets/screenshots/score.png" alt="My Score" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>📈 Detailed Score Report</h3>
+              <p>After every exam, see a full breakdown of correct and incorrect answers with a visual chart showing your performance.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/dictionary.png')">
+              <img src="assets/screenshots/dictionary.png" alt="Dictionary" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>📖 Built-in Dictionary</h3>
+              <p>Look up any word without leaving the exam. Perfect for English Language and Use of English questions with unfamiliar vocabulary.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/calculator.png')">
+              <img src="assets/screenshots/calculator.png" alt="Calculator" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>🧮 Built-in Calculator</h3>
+              <p>Access a full calculator during Mathematics and Physics questions without switching apps. Everything you need is right there.</p>
+            </div>
+          </div>
+
         </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/exam-question.png')">
-          <img src="assets/screenshots/exam-question.png" alt="Exam Question with Image" loading="lazy" />
-          <div class="screenshot-label">Question with Diagram</div>
+
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="prevBtn" onclick="moveCarousel(-1)">←</button>
+          <div class="carousel-dots" id="carouselDots"></div>
+          <button class="carousel-btn" id="nextBtn" onclick="moveCarousel(1)">→</button>
         </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/show-answer.png')">
-          <img src="assets/screenshots/show-answer.png" alt="Show Answer" loading="lazy" />
-          <div class="screenshot-label">Answer Explanations</div>
-        </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/filter-screen.png')">
-          <img src="assets/screenshots/filter-screen.png" alt="Filter Screen" loading="lazy" />
-          <div class="screenshot-label">Smart Filters</div>
-        </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/mock-exam.png')">
-          <img src="assets/screenshots/mock-exam.png" alt="Mock Exam" loading="lazy" />
-          <div class="screenshot-label">Mock Exam Timer</div>
-        </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/score.png')">
-          <img src="assets/screenshots/score.png" alt="My Score" loading="lazy" />
-          <div class="screenshot-label">Score & Results</div>
-        </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/dictionary.png')">
-          <img src="assets/screenshots/dictionary.png" alt="Dictionary" loading="lazy" />
-          <div class="screenshot-label">Built-in Dictionary</div>
-        </div>
-        <div class="screenshot-item" onclick="openLightbox('assets/screenshots/calculator.png')">
-          <img src="assets/screenshots/calculator.png" alt="Calculator" loading="lazy" />
-          <div class="screenshot-label">Calculator</div>
-        </div>
+        <div class="carousel-counter" id="carouselCounter">1 of 8</div>
       </div>
     </div>
   </section>
@@ -1109,6 +1232,56 @@
   </footer>
 
   <script>
+    // Carousel
+    let currentSlide = 0;
+    const track = document.getElementById('carouselTrack');
+    const slides = track.querySelectorAll('.carousel-slide');
+    const total = slides.length;
+    const dotsContainer = document.getElementById('carouselDots');
+    const counter = document.getElementById('carouselCounter');
+
+    // Create dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    });
+
+    function goToSlide(index) {
+      currentSlide = index;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentSlide);
+      });
+      counter.textContent = `${currentSlide + 1} of ${total}`;
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === total - 1;
+    }
+
+    function moveCarousel(dir) {
+      const next = currentSlide + dir;
+      if (next >= 0 && next < total) goToSlide(next);
+    }
+
+    // Touch/swipe support
+    let startX = 0;
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+    track.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) moveCarousel(diff > 0 ? 1 : -1);
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') moveCarousel(-1);
+      if (e.key === 'ArrowRight') moveCarousel(1);
+    });
+
+    // Init
+    goToSlide(0);
+
     // Lightbox
     function openLightbox(src) {
       document.getElementById('lightbox-img').src = src;
