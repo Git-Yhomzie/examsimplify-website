@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Password — ExamSimplify</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto Slab', serif;
+      background: linear-gradient(135deg, #4e1f66, #6B2D8B);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+    }
+    .logo { font-family: 'Alata', sans-serif; font-size: 1.4rem; color: #6B2D8B; margin-bottom: 8px; }
+    .icon { font-size: 3rem; margin-bottom: 16px; }
+    h1 { font-family: 'Alata', sans-serif; font-size: 1.6rem; color: #1a1a2e; margin-bottom: 12px; }
+    p { color: #4a4a6a; font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px; }
+    .btn {
+      display: inline-block;
+      background: #6B2D8B;
+      color: white;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-family: 'Alata', sans-serif;
+      font-size: 1rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #4e1f66; }
+    .btn-secondary {
+      display: inline-block;
+      color: #6B2D8B;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .divider { color: #ccc; margin: 16px 0; }
+    .store-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f3e8ff;
+      color: #6B2D8B;
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      font-family: 'Alata', sans-serif;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(107,45,139,0.2);
+      border-top-color: #6B2D8B;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #opening-msg { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">ExamSimplify</div>
+    <div class="icon">🔐</div>
+    <h1>Reset Your Password</h1>
+
+    <div id="opening-msg">
+      <p><span class="spinner"></span> Opening ExamSimplify app...</p>
+      <p style="font-size:0.85rem;color:#8888aa">If the app doesn't open automatically, tap the button below.</p>
+    </div>
+
+    <div id="main-msg">
+      <p>Tap the button below to open the ExamSimplify app and reset your password. The link expires in <strong>24 hours</strong>.</p>
+    </div>
+
+    <a href="#" id="open-app-btn" class="btn">Open ExamSimplify App</a>
+
+    <div class="divider">or</div>
+
+    <p style="font-size:0.85rem;margin-bottom:12px">Don't have the app installed?</p>
+    <a href="https://play.google.com/store" class="store-link" target="_blank">
+      🤖 Download on Google Play
+    </a>
+
+    <p style="margin-top:24px;font-size:0.8rem;color:#aaa">
+      Didn't request a password reset?
+      <a href="mailto:support@examsimplify.com" style="color:#6B2D8B">Contact support</a>
+    </p>
+  </div>
+
+  <script>
+    // Extract token from URL query params
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    if (token) {
+      // Build the deep link
+      const deepLink = `examsimplify://resetPassword?token=${token}`;
+
+      // Update the button
+      const btn = document.getElementById('open-app-btn');
+      btn.href = deepLink;
+
+      // Auto-attempt to open the app
+      document.getElementById('opening-msg').style.display = 'block';
+      document.getElementById('main-msg').style.display = 'none';
+
+      setTimeout(() => {
+        window.location.href = deepLink;
+      }, 1500);
+
+      // After 3 seconds, show manual button if app didn't open
+      setTimeout(() => {
+        document.getElementById('opening-msg').style.display = 'none';
+        document.getElementById('main-msg').style.display = 'block';
+      }, 3000);
+    } else {
+      // No token — show error
+      document.getElementById('main-msg').innerHTML = '<p style="color:#e53e3e">This reset link is invalid or has expired. Please request a new password reset from the app.</p>';
+      document.getElementById('open-app-btn').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
