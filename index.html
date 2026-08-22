@@ -961,8 +961,8 @@
           </div>
 
           <div class="carousel-slide">
-            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/exam-question.png')">
-              <img src="assets/screenshots/exam-question.png" alt="Exam Question with Diagram" loading="lazy" />
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/screenshot-diagrams.png')">
+              <img src="assets/screenshots/screenshot-diagrams.png" alt="Exam Question with Diagram" loading="lazy" />
             </div>
             <div class="carousel-caption">
               <h3>🔬 Questions with Diagrams</h3>
@@ -977,6 +977,16 @@
             <div class="carousel-caption">
               <h3>💡 Answer Explanations</h3>
               <p>Don't just see the correct answer — understand why it's right. Full explanations help you learn the concept, not just memorise answers.</p>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-phone" onclick="openLightbox('assets/screenshots/screenshot-explanation.png')">
+              <img src="assets/screenshots/screenshot-explanation.png" alt="AI Explanation" loading="lazy" />
+            </div>
+            <div class="carousel-caption">
+              <h3>🤖 AI Explanations</h3>
+              <p>Tap any correct answer to reveal an AI-powered explanation — generated specifically for Nigerian exam students.</p>
             </div>
           </div>
 
@@ -1037,7 +1047,7 @@
           <div class="carousel-dots" id="carouselDots"></div>
           <button class="carousel-btn" id="nextBtn" onclick="moveCarousel(1)">→</button>
         </div>
-        <div class="carousel-counter" id="carouselCounter">1 of 8</div>
+        <div class="carousel-counter" id="carouselCounter">1 of 9</div>
       </div>
     </div>
   </section>
@@ -1272,6 +1282,18 @@
       const diff = startX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) moveCarousel(diff > 0 ? 1 : -1);
     });
+
+    // Mouse drag support
+    let mouseStartX = 0;
+    let isDragging = false;
+    track.addEventListener('mousedown', e => { mouseStartX = e.clientX; isDragging = true; });
+    track.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = mouseStartX - e.clientX;
+      if (Math.abs(diff) > 50) moveCarousel(diff > 0 ? 1 : -1);
+    });
+    track.addEventListener('mouseleave', () => { isDragging = false; });
 
     // Keyboard support
     document.addEventListener('keydown', e => {
